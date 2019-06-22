@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>人人信</title>
+		<link rel="stylesheet" type="text/css" href="css/style.css"/>
+        <script type="text/javascript" src="http://api.map.baidu.com/api?v=1.2"></script>
+		<script src="js/jQuery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/js.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div class="nav_bj1">
+			<ul class="nav clearfix" style="padding-top: 0;">
+				<li><a href="index.html">首页</a></li>
+				<li><a href="about.html">关于我们</a></li>
+				<li><a href="business.html">业务板块</a></li>
+				<li><a href="risk.html">风控体系</a></li>
+				<li class="logo">
+					<a href="index.html"><img src="img/logo.png" alt="logo" /></a>
+				</li>
+				<li><a href="mechanism.html">产品服务</a></li>
+				<li><a href="industry.html">行业动态</a></li>
+				<li><a href="sign.html">招聘英才</a></li>
+				<li><a class="click" href="contact.html">联系我们</a></li>
+			</ul>	
+		</div>
+		<div class="banner6"></div>
+		<div class="mar_80"></div>
+		<!-- <iframe width="100%" height="508px" scrolling="no" frameborder="no" border="0" allowtransparency="yes" src=index1.html ></iframe> -->
+        <form action="" method="post">
+                <h2>        
+                    <div style=" margin:auto;width:835px;height: 508px;" id="container"></div>
+                </h2>
+        </form>
+        <div class="contact">
+            <h2>人人信投资基金管理（北京）有限公司</h2>
+            <p>邮编：100000</p>
+            <p>地址：北京市通州区新华西街58号院2号楼27层2716</p>
+            <p>电话： 01052889497</p>
+            <!-- <p>E-mail：XXXXX@renrenxin.com</p> -->
+        </div>
+        <div class="foot">
+			<ul class="foot1 clearfix">
+				<li><a href="contact.html">联系我们</a></li>
+				<li><span>|</span></li>
+				<li><a href="about.html">关于我们</a></li>
+				<li><span>|</span></li>
+				<li><a href="">合作伙伴</a></li>
+				<li><span>|</span></li>
+				<li><a href="">版权声明</a></li>
+				<li><span>|</span></li>
+				<li><a href="sign.html">招聘英才</a></li>
+			</ul>
+			<div class="foot2">版权所有 © 人人信投资基金管理（北京）有限公司</div>
+		</div>
+	</body>
+</html>
+<script type="text/javascript">
+        var sContent ="北京市通州区新华西街58号院 2号楼 27层 2716";
+        
+        var map = new BMap.Map("container",19);
+        map.setDefaultCursor("crosshair");
+        
+        map.enableScrollWheelZoom();
+        var point = new BMap.Point(116.648219,39.912381);   //默认地址坐标（经，纬）
+        map.centerAndZoom(point, 19);
+        var gc = new BMap.Geocoder();
+        
+        map.addControl(new BMap.NavigationControl()); 
+        map.addControl(new BMap.OverviewMapControl());
+        map.addControl(new BMap.ScaleControl());
+        map.addControl(new BMap.MapTypeControl());
+        map.addControl(new BMap.CopyrightControl());
+        
+        
+        var marker = new BMap.Marker(point);   
+        map.addOverlay(marker);
+        var opts = {
+              width : 200,     // 信息窗口宽度
+              height: 100,     // 信息窗口高度
+              title : "人人信投资基金管理（北京）有限公司" , // 信息窗口标题
+              enableMessage:false,//设置允许信息窗发送短息
+              message:" "
+            }
+        var infoWindow = new BMap.InfoWindow("北京市通州区新华西街58号院 2号楼 27层 2716", opts);  // 创建信息窗口对象 
+        marker.addEventListener("click", function(e)
+        {
+                // document.getElementById("lonlat").value = e.point.lng; 
+                // document.getElementById("lonlat2").value =e.point.lat; 
+                map.openInfoWindow(infoWindow,point); //开启信息窗口
+        }); 
+        
+        
+        marker.enableDragging();
+        
+        marker.addEventListener("dragend",function(e)
+        {
+          gc.getLocation(e.point, function(rs)
+          {
+              showLocationInfo(e.point, rs);  
+          });  
+        });
+        
+    
+        function showLocationInfo(pt, rs)
+        {
+            var opts = {  width : 250, height: 150, title : "当前位置" } ; 
+            var addComp = rs.addressComponents;  
+            var addr = "当前位置：" + addComp.province + ", " + addComp.city + ", " + addComp.district + ", " + addComp.street + ", " + addComp.streetNumber + "<br/>";  
+            addr += "纬度: " + pt.lat + ", " + "经度：" + pt.lng;     
+            var infoWindow = new BMap.InfoWindow(addr, opts); 
+            marker.openInfoWindow(infoWindow);  
+        } 
+        
+        map.addEventListener("click", function(e)
+        {
+                document.getElementById("lonlat").value = e.point.lng;
+                document.getElementById("lonlat2").value = e.point.lat;
+        });
+        
+         
+        var traffic = new BMap.TrafficLayer();     
+        map.addTileLayer(traffic);                    
+        
+        
+        function iploac(result)
+        {
+            var cityName = result.name;
+        }
+        
+        var myCity = new BMap.LocalCity();
+        myCity.get(iploac);
+        
+        function sear(result)
+        {
+          var local = new BMap.LocalSearch(map, {renderOptions:{map: map} });
+          local.search(result);
+        }
+        var infoWindow = new BMap.InfoWindow(sContent);  // 创建信息窗口对象
+        map.openInfoWindow(infoWindow,point); //开启信息窗口
+        document.getElementById("r-result").innerHTML = "信息窗口的内容是：<br />" + infoWindow.getContent();
+
+</script>

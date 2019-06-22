@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <script src="js/jQuery.min.js" type="text/javascript" charset="utf-8"></script>
+    </head>
+    <body>
+        <form id="form1" >
+            <div>您是否确认是为自己购买的私募基金产品？</div>
+            <input type="radio"  name="whether" value="0" />是
+            <input type="radio" name="whether" value="1" />否
+            </br>
+            <div>您是否确认金融资产不低于300万元？</div>
+            <input type="radio"  name="whether1" value="0" />是
+            <input type="radio" name="whether1" value="1" />否
+            </br>
+            <div>您是否确认最近三年个人年均收入不低于50万元？</div>
+            <input type="radio"  name="whether2" value="0" />是
+            <input type="radio" name="whether2" value="1" />否
+            </br>
+            <button type="button" id="btnSubmit">提交</button>
+
+        </form>
+    </body>
+</html>
+<script type="text/javascript" language="javascript">
+ /*------判断radio是否有选中，获取选中的值--------*/
+    $(function(){
+         $("#btnSubmit").click(function(){
+            var whether=$('input:radio[name="whether"]:checked').val();
+            if(whether==null){
+                alert("请选择!");
+                return false;
+            }
+            else{
+                console.log(whether);
+            }
+            var whether1= $('input:radio[name="whether1"]:checked').val();
+            if(whether1==null){
+                alert("请选择!");
+                return false;
+            }
+            else{
+                console.log(whether1);
+
+            }          
+            var whether2= $('input:radio[name="whether2"]:checked').val();
+            if(whether2==null){
+                alert("请选择!");
+                return false;
+            }
+            else{
+                console.log(whether2);
+            }      
+            if(whether==0){
+                if(whether1==0 || whether2==0){
+                    alert("合格")
+                }
+                else{
+                    alert("首页")
+                }
+            }
+            else{
+                alert(2)
+            }
+
+         });
+     });
+</script>
